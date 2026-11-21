@@ -29,6 +29,10 @@ def poem_text() -> str:
     return "\n".join(POEM_LINES) + "\n"
 
 
+# The competition gate: entry.txt must be 1-280 chars, not only whitespace.
+MAX_CHARS = 280
+
+
 def output_dir() -> str:
     """Pick the output directory, preferring MAKEFUN_OUTPUT_DIR."""
     requested = os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output"
@@ -49,7 +53,7 @@ def main() -> None:
     text = poem_text()
     # Guard the gate before writing: 1-280 chars, not only whitespace.
     chars = len(text)
-    if not 1 <= chars <= 280 or not text.strip():
+    if not 1 <= chars <= MAX_CHARS or not text.strip():
         raise ValueError(f"poem is {chars} chars; must be 1-280, non-blank")
     directory = output_dir()
     path = os.path.join(directory, "entry.txt")
